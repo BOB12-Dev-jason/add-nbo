@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-#define BUF_SIZE 256
+#include <netinet/in.h>
 
 int main(int argc, char **argv) {
 
@@ -30,8 +29,11 @@ int main(int argc, char **argv) {
 	fread(&n1, sizeof(uint32_t), 1, fp1);
 	fread(&n2, sizeof(uint32_t), 1, fp2);
 
-	printf("%x\n", n1);
-	printf("%x\n", n2);
+	uint32_t n1_hbo = ntohl(n1);
+	uint32_t n2_hbo = ntohl(n2);
+	uint32_t res = n1_hbo + n2_hbo;
+
+	printf("%d(0x%x) + %d(0x%x) = %d(0x%x)", n1_hbo, n1_hbo, n2_hbo, n2_hbo, res, res); 
 
 	fclose(fp1);
 	fclose(fp2);
